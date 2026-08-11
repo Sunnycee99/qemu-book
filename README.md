@@ -1,10 +1,8 @@
 # 深入理解 QEMU 设计原理
 
-本仓库是《深入理解 QEMU 设计原理》的开源主仓库，包含书稿 Markdown 源文件、配图、实验说明和可复现的 PDF 构建环境。
+本仓库是《深入理解 QEMU 设计原理》的开源主仓库，包含书稿 Markdown 源文件、配图、实验说明和可复现的 PDF 构建环境。目前以使用 Agent 完成相关材料的初步搜集，暂未成书。
 
-仓库包含五篇二十三章的书稿、实验目录、证据账本和 PDF 构建链路。全书从问题与历史现场出发，沿补丁、邮件审查、会议材料和当前源码追踪设计如何形成；内容检查关注章节是否具备足够展开、结构是否过度碎片化，以及是否给出可复核的实验或源码验证入口。后续版本仍会随着 QEMU 上游演进持续校订。欢迎通过 Issue 讨论内容，通过 Pull Request 修正错误或贡献章节。
-
-全书面向 QEMU `v11.1.0` 发布线，源码引用以 [QEMU 官方 GitLab](https://gitlab.com/qemu-project/qemu) 为准。截至 2026 年 7 月 19 日，上游最新节点为 [`v11.1.0-rc0`](https://gitlab.com/qemu-project/qemu/-/tree/v11.1.0-rc0?ref_type=tags)，本轮书稿的现状结论、源码链接和依赖源码版本的实验设计冻结在该节点。这个“源码审查基线”不表示所有 live、KVM 或双主机实验都已经运行；正式版发布后仍需重新执行证据与实验门禁，不能预先把 RC 结果写成正式版事实。
+全书面向 QEMU `v11.1.0` 发布线，源码引用以 [QEMU 官方 GitLab](https://gitlab.com/qemu-project/qemu) 为准。截至 2026 年 7 月 19 日，上游最新节点为 [`v11.1.0-rc0`](https://gitlab.com/qemu-project/qemu/-/tree/v11.1.0-rc0?ref_type=tags)。
 
 ## 阅读与构建
 
@@ -59,20 +57,11 @@ BOOK_VERSION=v0.1.0 BOOK_DATE="2026-07-19" make pdf
 ```
 
 ## 全书结构
-
-| 篇 | 章节 | 主线 |
-| --- | --- | --- |
-| 第一篇：QEMU 从哪里来 | 1. 跨架构运行既有程序；2. 从进程走向完整机器；3. 机器契约；4. QOM 与生命周期；5. 地址空间；6. Accelerator 与状态所有权 | 从 2003 年的具体问题追到今天的系统边界，并比较 TCG、KVM 和其余 Accelerator |
-| 第二篇：TCG 与可维护的动态翻译 | 7. dyngen；8. TCG 转折；9. 强类型 IR；10. 收敛的优化；11. TB、SoftMMU 与 MTTCG | 解释 QEMU 为什么把代码生成能力收回到自身架构中 |
-| 第三篇：QEMU 与 KVM | 12. 硬件虚拟化机会；13. `/dev/kvm`；14. exit 与 I/O；15. 状态和迁移 | 追踪内核、硬件与用户态机器模型如何形成分层栈 |
-| 第四篇：为什么要模拟这么多硬件 | 16. 模型分类与平台契约；17. RISC-V 外设建模；18. RISC-V 板卡建模；19. IOMMU、virtio、vhost 与 VFIO | 从可运行的 RISC-V 代码掌握设备和 board 开发 |
-| 第五篇：百万行代码如何继续演进 | 20. monitor、log、trace 与 gdb 调试；21. 测试、迁移、版本和安全；22. 邮件评审与维护；23. Rust | 覆盖内核、裸机、RTOS、一般 guest 调试与长期维护 |
-
-TCG 与 KVM 是两条并行的执行路径。TCG 在 QEMU 内显式实现客户机架构语义，KVM 则由 Linux KVM 和宿主硬件执行客户机指令；它们共享 CPU 公共状态、Machine 与设备模型，又各自承担不同的可移植性、性能和状态同步成本。
+暂未确定。
 
 ## 写作约定
 
-章节标题和思考题都不手工编号，由构建链路统一生成。思考题穿插在相关知识点之后，其答案自动汇总到附录并建立双向链接。图片、代码、表格、公式和提示框的具体写法见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。提交前先运行 `make check-content` 与 `make check-experiments`，再运行一次 `make pdf`，确保内容、实验目录、链接、中文字体和分页均正常。
+章节标题和思考题无需手工编号，由构建链路统一生成。思考题穿插在相关知识点之后，其答案自动汇总到附录并建立双向链接。图片、代码、表格、公式和提示框的具体写法见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。提交前先运行 `make check-content` 与 `make check-experiments`，再运行一次 `make pdf`，确保内容、实验目录、链接、中文字体和分页均正常。
 
 本仓库的书稿组织方式参考了 [bojieli/ai-agent-book](https://github.com/bojieli/ai-agent-book)：正文按章节拆分，用 Pandoc 汇总 Markdown，再由 XeLaTeX 生成整本 PDF。本项目在此基础上增加了固定容器环境和自动化 PDF 构建。
 
